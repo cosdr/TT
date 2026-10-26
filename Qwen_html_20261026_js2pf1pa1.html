@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUPINATelekom — Официальный сайт страданий</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+        :root {
+            --primary: #0d2137;
+            --accent: #2ecc71;
+            --danger: #dc3545;
+            --warning: #f1c40f;
+            --bg: #f5f5f5;
+            --text: #1a1a1a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary);
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            box-shadow: 0 4px 20px rgba(0,0,0,.4);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+            cursor: pointer;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: var(--accent); }
+        
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 24px;
+        }
+        .nav-links li a {
+            color: #8899aa;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: .9rem;
+            transition: all .2s;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-links li a:hover, .nav-links li a.active {
+            color: #fff;
+            border-bottom-color: var(--accent);
+        }
+
+        /* PAGE SYSTEM */
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease;
+            flex: 1;
+        }
+        .page.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, #0d2137 0%, #1a3a5c 100%);
+            color: #fff;
+            padding: 80px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            min-height: 450px;
+        }
+        .hero-text { max-width: 600px; }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        .hero h1 em { color: var(--accent); font-style: normal; }
+        .hero p { font-size: 1.1rem; color: #b0bec5; margin-bottom: 32px; }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            transition: all .2s;
+            text-decoration: none;
+            border: none;
+        }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: #27ae60; transform: translateY(-2px); }
+        .btn-outline { background: transparent; color: #fff; border: 2px solid #fff; margin-left: 12px; }
+        .btn-outline:hover { background: #fff; color: var(--primary); }
+
+        .hero-img-container {
+            width: 450px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,.5);
+            background: #000;
+            aspect-ratio: 4/3;
+        }
+        .hero-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .img-fallback {
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            color: var(--accent); font-size: 4rem;
+        }
+        .img-fallback small { font-size: .8rem; color: #666; margin-top: 10px; text-align: center; padding: 0 20px;}
+
+        /* CONTENT WRAPPERS */
+        .container { max-width: 1200px; margin: 0 auto; padding: 60px 40px; }
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            display: inline-block;
+            border-bottom: 4px solid var(--accent);
+            padding-bottom: 6px;
+        }
+        .subtitle { color: #666; margin-bottom: 40px; font-size: 1.05rem; }
+
+        /* TABLES */
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,.08);
+            background: #fff;
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        th {
+            background: var(--primary);
+            color: #fff;
+            padding: 18px 24px;
+            text-align: left;
+            font-size: .85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        td {
+            padding: 18px 24px;
+            border-bottom: 1px solid #eee;
+            font-size: .95rem;
+            vertical-align: top;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #f8f9fa; }
+        
+        .price { font-weight: 800; color: var(--primary); white-space: nowrap; font-size: 1.05rem; }
+        .speed { font-weight: 700; color: var(--accent); white-space: nowrap; }
+        .desc { color: #555; font-size: .9rem; line-height: 1.5; }
+
+        /* BADGES */
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: .7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-left: 8px;
+            vertical-align: middle;
+            color: #fff;
+        }
+        .b-red { background: var(--danger); }
+        .b-green { background: var(--accent); }
+        .b-orange { background: #e67e22; }
+        .b-purple { background: #9b59b6; }
+        .b-blue { background: #3498db; }
+
+        /* TV PLAYER SIMULATION */
+        .tv-player {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.3);
+            position: relative;
+            aspect-ratio: 16/9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .tv-screen {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #111;
+        }
+        .tv-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,.9));
+            padding: 30px 24px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            font-weight: 800;
+            font-size: .9rem;
+            text-transform: uppercase;
+        }
+        .live-dot {
+            width: 10px; height: 10px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+        
+        .channel-name {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .channel-sub { color: #aaa; font-size: .85rem; margin-top: 4px; }
+
+        /* CARDS GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 32px;
+            border-top: 5px solid var(--accent);
+            box-shadow: 0 4px 16px rgba(0,0,0,.06);
+            transition: transform .2s;
+        }
+        .card:nth-child(2) { border-top-color: #e67e22; }
+        .card:nth-child(3) { border-top-color: #2c3e50; }
+        .card:hover { transform: translateY(-6px); }
+        .card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 12px; text-transform: uppercase; }
+        .card p { color: #555; font-size: .95rem; }
+
+        /* STATUS BAR */
+        .status-bar {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 16px 24px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: .95rem;
+        }
+        .status-dot {
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: var(--danger);
+            animation: blink 1s infinite;
+            flex-shrink: 0;
+        }
+
+        /* TICKER */
+        .ticker {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            font-weight: 700;
+            font-size: .9rem;
+        }
+        .ticker-inner {
+            display: inline-block;
+            animation: scroll 30s linear infinite;
+        }
+        @keyframes scroll { 0%{transform:translateX(100%)} 100%{transform:translateX(-100%)} }
+
+        /* MEME BANNER */
+        .meme-banner {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        .meme-banner h2 { font-size: 2rem; margin-bottom: 12px; }
+        .meme-banner p { color: #aaa; max-width: 600px; margin: 0 auto; }
+        .meme-emoji { font-size: 3.5rem; margin-bottom: 16px; }
+
+        /* FAQ */
+        .faq-item {
+            background: #fff;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.05);
+            overflow: hidden;
+        }
+        .faq-q {
+            padding: 20px 24px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-q:hover { background: #f8f9fa; }
+        .faq-a { padding: 0 24px 20px; color: #555; font-size: .95rem; display: none; }
+        .faq-item.open .faq-a { display: block; }
+        .faq-item.open .faq-q::after { content: '▲'; }
+        .faq-q::after { content: '▼'; font-size: .7rem; color: #999; transition: .2s; }
+
+        /* FOOTER */
+        footer {
+            background: var(--primary);
+            color: #667788;
+            text-align: center;
+            padding: 50px 40px;
+            font-size: .85rem;
+            margin-top: auto;
+        }
+        footer strong { color: var(--accent); font-size: 1.1rem; }
+        .disclaimer {
+            margin-top: 20px;
+            font-size: .75rem;
+            color: #445566;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; padding: 40px 20px; text-align: center; }
+            .hero h1 { font-size: 2rem; }
+            .hero-img-container { width: 100%; }
+            nav { padding: 0 16px; }
+            .nav-links { gap: 12px; flex-wrap: wrap; }
+            .nav-links li a { font-size: .75rem; }
+            .container { padding: 40px 16px; }
+            .btn-outline { margin-left: 0; margin-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <div class="logo" onclick="showPage('home')">TUPINA<span>Telekom</span></div>
+    <ul class="nav-links">
+        <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Главная</a></li>
+        <li><a href="#" onclick="showPage('tariffs')" id="nav-tariffs">Тарифы</a></li>
+        <li><a href="#" onclick="showPage('tv')" id="nav-tv">Телевидение</a></li>
+        <li><a href="#" onclick="showPage('business')" id="nav-business">Бизнес</a></li>
+        <li><a href="#" onclick="showPage('services')" id="nav-services">Услуги</a></li>
+        <li><a href="#" onclick="showPage('faq')" id="nav-faq">FAQ</a></li>
+    </ul>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+    <div class="ticker-inner">
+        ⚠️ СЕРВЕР НА PENTIUM 4 ПЕРЕГРЕЛСЯ В 5-й РАЗ ЗА ЧАС &nbsp;&nbsp;|&nbsp;&nbsp; 📢 ПОДДЕРЖКА ОТВЕТИТ ВАМ КОГДА-НИБУДЬ &nbsp;&nbsp;|&nbsp;&nbsp; 🔥 АКЦИЯ: КУПИ «ТРИ КОПЕЙКИ» И ПОЛУЧИ РАЗОЧАРОВАНИЕ БЕСПЛАТНО! &nbsp;&nbsp;|&nbsp;&nbsp; 💀 IPTV ОТКЛЮЧИТЬ НЕЛЬЗЯ, НО МОЖНО ЗАПЛАТИТЬ 16 800₽ ЗА ПОПЫТКУ &nbsp;&nbsp;|&nbsp;&nbsp; 📺 КАНАЛ «РЫБАЛКА 24/7» ТЕПЕРЬ В HD (НЕТ) &nbsp;&nbsp;|&nbsp;&nbsp; 🐱 КОТ ПЕТРОВИЧ ПРОШЁЛСЯ ПО КОММУТАТОРУ — СЕТЬ ЛЕЖИТ &nbsp;&nbsp;|&nbsp;&nbsp; 📉 СКОРОСТЬ УПАЛА ДО 128 БАУД — ЭТО НОРМАЛЬНО &nbsp;&nbsp;|&nbsp;&nbsp;
+        ⚠️ СЕРВЕР НА PENTIUM 4 ПЕРЕГРЕЛСЯ В 5-й РАЗ ЗА ЧАС &nbsp;&nbsp;|&nbsp;&nbsp; 📢 ПОДДЕРЖКА ОТВЕТИТ ВАМ КОГДА-НИБУДЬ &nbsp;&nbsp;|&nbsp;&nbsp; 🔥 АКЦИЯ: КУПИ «ТРИ КОПЕЙКИ» И ПОЛУЧИ РАЗОЧАРОВАНИЕ БЕСПЛАТНО! &nbsp;&nbsp;|&nbsp;&nbsp; 💀 IPTV ОТКЛЮЧИТЬ НЕЛЬЗЯ, НО МОЖНО ЗАПЛАТИТЬ 16 800₽ ЗА ПОПЫТКУ &nbsp;&nbsp;|&nbsp;&nbsp;  КАНАЛ «РЫБАЛКА 24/7» ТЕПЕРЬ В HD (НЕТ) &nbsp;&nbsp;|&nbsp;&nbsp; 🐱 КОТ ПЕТРОВИЧ ПРОШЁЛСЯ ПО КОММУТАТОРУ — СЕТЬ ЛЕЖИТ &nbsp;&nbsp;|&nbsp;&nbsp;  СКОРОСТЬ УПАЛА ДО 128 БАУД — ЭТО НОРМАЛЬНО &nbsp;&nbsp;|&nbsp;&nbsp;
+    </div>
+</div>
+
+<!-- ==================== PAGE: HOME ==================== -->
+<div id="page-home" class="page active">
+    <div class="hero">
+        <div class="hero-text">
+            <h1>TUPINA<em>Telekom</em> — интернет для тех, кому не повезло</h1>
+            <p>Мы предоставляем доступ к интернету не только плебеям, но и настоящим бизнесменам. Иногда даже 1С не отваливается. Ну, почти никогда.</p>
+            <div>
+                <button class="btn btn-primary" onclick="showPage('tariffs')">ТАРИФЫ</button>
+                <button class="btn btn-outline" onclick="showPage('tv')">ТЕЛЕВИДЕНИЕ</button>
+                <button class="btn btn-outline" onclick="showPage('business')">БИЗНЕС</button>
+            </div>
+        </div>
+        <div class="hero-img-container">
+            <!-- ТРЕБУЕТСЯ ФАЙЛ ptu.png -->
+            <img src="ptu.png" alt="Монтаж от инженеров ПТУ" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="img-fallback" style="display:none;">
+                📡🔌
+                <small>Пример монтажа от наших профессиональных<br>инженеров-практикантов с местного ПТУ<br>(файл ptu.png не найден)</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="status-bar">
+            <div class="status-dot"></div>
+            <div id="status-text"><strong>Статус сети:</strong> Работает через раз. Серверный шкаф в подвале затопило. Техник Валера ушёл в запой. Ожидаемое время восстановления: неизвестно.</div>
+        </div>
+
+        <h2 class="section-title">ЗАЧЕМ ЭТО БИЗНЕСУ</h2>
+        <p class="subtitle">Три причины выбрать TUPINATelekom (спойлер: их нет)</p>
+        <div class="grid">
+            <div class="card">
+                <h3>1С ЕЛЕ ДЫШИТ</h3>
+                <p>База грузится полчаса — зато есть время покурить и подумать, зачем вам вообще интернет. Облачная 1С отваливается ровно в момент сдачи отчётности. Совпадение? Не думаем.</p>
+            </div>
+            <div class="card">
+                <h3>IPSEC «ТИПА ЕСТЬ»</h3>
+                <p>Шифрование ровно от вашего роутера до нашего. Дальше уже насрать, данные всё равно сольём. Но формально — шифрование есть. Юридически мы чисты.</p>
+            </div>
+            <div class="card">
+                <h3>VIP-ИГНОР</h3>
+                <p>На самом дорогом тарифе поддержка отвечает 1 раз из 100. На остальных — ноль из ста, привыкайте. Зато на дорогом тарифе вам хотя бы прочитают тикет.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="meme-banner">
+        <div class="meme-emoji">🤡</div>
+        <h2>«Наш интернет — как бывшая: обещает много, делает мало, стоит дорого»</h2>
+        <p>— Главный инженер TUPINATelekom, Валера, в состоянии лёгкого опьянения</p>
+    </div>
+</div>
+
+<!-- ==================== PAGE: TARIFS (HOME USERS) ==================== -->
+<div id="page-tariffs" class="page">
+    <div class="container">
+        <h2 class="section-title">ТАРИФЫ ДЛЯ ДОМА</h2>
+        <p class="subtitle">Выбирайте свой уровень страдания. Все тарифы включают обязательный пакет «Дебилизация».</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th>ТАРИФ</th><th>ЦЕНА</th><th>СКОРОСТЬ</th><th>ВОЗМОЖНОСТИ</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>три копейки</strong></td>
+                        <td class="price">3 333 333 р/мес</td>
+                        <td class="speed">3кбит/сек ↓ / 3кбит/сек ↑</td>
+                        <td class="desc">Как оплачено — так и нахуячено. Скорость как у голубиной почты, только голубь быстрее. Идеально для ICQ и отправки SMS длиной в 2 символа.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Шиз 16к*</strong> <span class="badge b-red">ХИТ</span></td>
+                        <td class="price">3 990 р/мес</td>
+                        <td class="speed">16кбит/сек ↓ / 1кбит/сек ↑</td>
+                        <td class="desc">Тариф для шизов. Кто будет пользоваться такими скоростями в 2026? Мы сами не понимаем. Может, Валера случайно создал его во сне.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Травокур ПРО 24к*</strong></td>
+                        <td class="price">6 500 р/мес</td>
+                        <td class="speed">24кбит/сек ↓ / 4кбит/сек ↑</td>
+                        <td class="desc">Для курильщиков. Потребность в интернете небольшая — мы дадим, но вероятность отвалов +20%. Зато можно курить и думать о вечном.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Срачмен про макс 256к*</strong></td>
+                        <td class="price">12 490 р/мес</td>
+                        <td class="speed">256кбит/сек ↓ / 64кбит/сек ↑</td>
+                        <td class="desc">Интернет для диванных экспертов. Хватит для срачей в комментах. Вероятность отвалов +46%. YouTube не откроется — и это фича, а не баг.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Жесть.нет 1М</strong> <span class="badge b-orange">ПОПУЛЯРНЫЙ</span></td>
+                        <td class="price">24 390 р/мес</td>
+                        <td class="speed">1мбит/сек ↓ / 512кбит/сек ↑</td>
+                        <td class="desc">Лучший сервер: Intel Pentium 4 + VirtualBox + RouterOS 5. Нулевое шифрование, максимальная прозрачность. Иногда картинки грузятся (1 картинка = 1000₽).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ностальгия 56к</strong> <span class="badge b-purple">РЕТРО</span></td>
+                        <td class="price">18 900 р/мес</td>
+                        <td class="speed">56кбит/сек ↓ / 33.6кбит/сек ↑</td>
+                        <td class="desc">Модемный писк при подключении включён по умолчанию. Вы слышите этот звук — и понимаете, что живы. Звуковой фон: белый шум + крики соседей.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Бабушкин Wi-Fi</strong></td>
+                        <td class="price">9 999 р/мес</td>
+                        <td class="speed">128кбит/сек ↓ / 64кбит/сек ↑</td>
+                        <td class="desc">Роутер стоит на холодильнике рядом с компотом. Сигнал проходит через 3 бетонные стены и банку с огурцами. Скорость зависит от фазы луны.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Студент-нищеброд</strong> <span class="badge b-blue">АКЦИЯ</span></td>
+                        <td class="price">0 р/мес*</td>
+                        <td class="speed">64кбит/сек ↓ / 16кбит/сек ↑</td>
+                        <td class="desc">*Бесплатно первые 3 дня. Далее — 50 000₽/мес. Реклама казино и микрозаймов встроена прямо в TCP-пакеты. Отключить нельзя. Наслаждайтесь.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="margin-top:16px; font-size:.8rem; color:#888;">* — Отключение IPTV невозможно ни на одном тарифе. Даже если вы заплатите. Особенно если вы заплатите.</p>
+    </div>
+</div>
+
+<!-- ==================== PAGE: TV ==================== -->
+<div id="page-tv" class="page">
+    <div class="container">
+        <h2 class="section-title">📺 TUPINA-TV LIVE</h2>
+        <p class="subtitle">Прямой эфир канала, который вы не просили, но получили</p>
+
+        <!-- TV PLAYER SIMULATION -->
+        <div class="tv-player">
+            <!-- ТРЕБУЕТСЯ ФАЙЛ TT87.png -->
+            <img src="TT87.png" alt="Тестовая таблица 1987" class="tv-screen" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22><rect fill=%22%23111%22 width=%22800%22 height=%22450%22/><text x=%2250%%22 y=%2250%%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%232ecc71%22 font-size=%2240%22 font-family=%22Arial%22>TT87.png NOT FOUND</text></svg>';">
+            <div class="tv-overlay">
+                <div>
+                    <div class="channel-name">Теле Таблица1987</div>
+                    <div class="channel-sub">Канал №42 • Тестовый сигнал • С 1987 года без перерыва</div>
+                </div>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    LIVE
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title" style="font-size:1.6rem;">ПАКЕТЫ ТЕЛЕВИДЕНИЯ</h2>
+        <p class="subtitle">Каналы, которые вы не хотели смотреть, но будете</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th>ПАКЕТ</th><th>ЦЕНА</th><th>КАНАЛОВ</th><th>ОПИСАНИЕ</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Базовый «Дебилизация»</strong> <span class="badge b-green">ОБЯЗАТЕЛЬНЫЙ</span></td>
+                        <td class="price">0 р/мес</td>
+                        <td class="speed">3 канала</td>
+                        <td class="desc">Рыбалка 24/7, Огород ТВ, Вязание Live. Нельзя отключить. Нельзя заменить. Это ваш базовый пакет деградации. Вы примете это.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Пакет «Сосед смотрит»</strong></td>
+                        <td class="price">4 999 р/мес</td>
+                        <td class="speed">+12 каналов</td>
+                        <td class="desc">Ремонт, кулинария, сериалы 2007 года. Ваш сосед уже смотрит. Вы тоже будете. Сопротивление бесполезно. Он знает, что вы смотрите.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Пакет «Бабушкин рай»</strong> <span class="badge b-purple">VIP</span></td>
+                        <td class="price">8 999 р/мес</td>
+                        <td class="speed">+25 каналов</td>
+                        <td class="desc">Здоровье, народные средства, «лечим радикулит капустным листом». Плюс 3 канала с одним и тем же интервью врача 1998 года. Врач уже мёртв. Интервью продолжается.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Пакет «МАКС Деградация»</strong></td>
+                        <td class="price">15 999 р/мес</td>
+                        <td class="speed">ВСЕ КАНАЛЫ</td>
+                        <td class="desc">Абсолютно все каналы. Включая те, которые мы сами не знаем зачем добавили. Статический шум HD. Чёрный экран Premium. Тестовая таблица 1987 (LIVE). Наслаждайтесь.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Пакет «Ночной дожор»</strong> <span class="badge b-orange">NEW</span></td>
+                        <td class="price">7 777 р/мес</td>
+                        <td class="speed">8 каналов</td>
+                        <td class="desc">Работает только с 02:00 до 05:00. Показывает рекламу еды, которую вы не можете заказать. Вы будете голодны. Это часть плана.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Пакет «Для кота»</strong></td>
+                        <td class="price">3 333 р/мес</td>
+                        <td class="speed">1 канал</td>
+                        <td class="desc">Лазерная точка на стене. 24/7. Ваш кот будет счастлив. Вы — нет. Но коту важнее. Доктор К. одобряет.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 style="margin-top:40px; margin-bottom:12px; font-size:1.1rem;"> Частичный список каналов:</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:10px;">
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;"> Рыбалка 24/7</span>
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;">🥒 Огород ТВ</span>
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;">🧶 Вязание Live</span>
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;"> Ремонт и точка</span>
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;">🍳 Готовим кашу</span>
+            <span class="badge b-red" style="padding:8px 14px; font-size:.85rem; text-decoration:line-through;">❌ MTV (2013)</span>
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;">💊 Здоровье с Доктором К.</span>
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;">📺 Статический шум HD</span>
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;">⬛ Чёрный экран Premium</span>
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;">📊 Теле Таблица1987</span>
+            <span class="badge b-red" style="padding:8px 14px; font-size:.85rem; text-decoration:line-through;">❌ Discovery</span>
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;">🐟 Рыбалка 24/7 (дубль)</span>
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;">🌾 Огород ТВ (ночь)</span>
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;">👵 Бабушкины советы</span>
+            <span class="badge b-red" style="padding:8px 14px; font-size:.85rem; text-decoration:line-through;">❌ NatGeo</span>
+            <span class="badge b-green" style="padding:8px 14px; font-size:.85rem;">🐱 Лазер для кота</span>
+        </div>
+        <p style="margin-top:12px; font-size:.8rem; color:#888;">Доктор К. — это кот Валеры, который случайно сел на пульт в 2019 году. Мы продолжаем транслировать его передачу. Рейтинги выше, чем у настоящего врача.</p>
+    </div>
+</div>
+
+<!-- ==================== PAGE: BUSINESS ==================== -->
+<div id="page-business" class="page">
+    <div class="container">
+        <h2 class="section-title">БИЗНЕС-ТАРИФЫ</h2>
+        <p class="subtitle">Для тех, кто хочет страдать по-взрослому и с НДС</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th>ТАРИФ</th><th>ЦЕНА</th><th>СКОРОСТЬ</th><th>ВОЗМОЖНОСТИ</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ГигаБизнес 1М</strong></td>
+                        <td class="price">60 000 р/мес</td>
+                        <td class="speed">1Mbps ↓ / 512Kbps ↑</td>
+                        <td class="desc">В принципе подходит для малого бизнеса. Иногда облачная 1С отваливается. Иногда — это ключевое слово. Иногда она вообще не включается.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Бизнес+</strong></td>
+                        <td class="price">82 000 р/мес</td>
+                        <td class="speed">5Mbps ↓ / 3Mbps ↑</td>
+                        <td class="desc">Вытянет 2 компа + 2 базы 1С. Сможете не только полчаса грузить базу, но ещё и немного поработать (10 минут из одного рабочего дня). Остальное время — медитация.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Бизнес про МАКС</strong> <span class="badge b-green">VIP</span></td>
+                        <td class="price">110 000 р/мес</td>
+                        <td class="speed">8Mbps ↓ / 6Mbps ↑</td>
+                        <td class="desc">Крупная контора? Налоговая интересуется? Предоставим IPSec ровно от вашего роутера до нашего. Дальше — открытый текст и молитвы.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ГигаБизнес Про МАКС Экстра+</strong></td>
+                        <td class="price">340 000 р/мес</td>
+                        <td class="speed">16Mbps ↓ / 10Mbps ↑</td>
+                        <td class="desc">Огромная контора? Без проблем. Поддержка отвечает 1 раз из 100! На других тарифах ваши проблемы игнорируются полностью. Здесь — частично.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Enterprise Боль MAXIMUM</strong> <span class="badge b-red">ELITE</span></td>
+                        <td class="price">999 999 р/мес</td>
+                        <td class="speed">100Mbps* ↓ / 50Mbps* ↑</td>
+                        <td class="desc">*Скорость указана в мечтах. Реальная скорость — как у тарифа «три копейки». Зато вам дадут сертификат «Почётный страдалец» и ручку с логотипом. Ручка не пишет.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Стартап «На коленке»</strong></td>
+                        <td class="price">45 000 р/мес</td>
+                        <td class="speed">2Mbps ↓ / 1Mbps ↑</td>
+                        <td class="desc">Для стартапов, которые ещё не поняли, что интернет — это зло. Через 3 месяца перейдёте на «ГигаБизнес 1М» и поймёте. Мы предупреждали.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="meme-banner" style="background: linear-gradient(135deg, #2c3e50, #1a1a2e);">
+        <div class="meme-emoji">💀</div>
+        <h2>«Если ваш интернет работает стабильно — вы подключены не к нам»</h2>
+        <p>— Надпись на стене серверной комнаты TUPINATelekom, написана маркером Валерой в 2019 году</p>
+    </div>
+</div>
+
+<!-- ==================== PAGE: SERVICES ==================== -->
+<div id="page-services" class="page">
+    <div class="container">
+        <h2 class="section-title">ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ</h2>
+        <p class="subtitle">Платите больше — получайте меньше. Это наша философия.</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th>УСЛУГА</th><th>СТОИМОСТЬ</th><th>ОПИСАНИЕ</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Открыть порт</strong></td>
+                        <td class="price">6 999 р/мес</td>
+                        <td class="desc">У нас мало белых адресов, поэтому мы продаём один открытый порт! Один. За 7 штук в месяц. Логика? Не слышали. Математика? Тоже.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Отключить IPTV</strong> <span class="badge b-red">НЕ РАБОТАЕТ</span></td>
+                        <td class="price">16 800 р/мес</td>
+                        <td class="desc">Мы не хотим останавливать дебилизацию населения! Не работает на тарифах со звёздочкой. Но деньги спишем. Возвратов нет. Никогда. Ни при каких обстоятельствах.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Наш роутер</strong></td>
+                        <td class="price">35 999 р/мес</td>
+                        <td class="desc">АФИГЕННЫЙ роутер в ВАШ дом. Технология как в КНДР. Полный контроль. Куча троянов на ваш ПК в подарок! Установка включена (нет). Гарантия — пока кот не съест.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Антивирус АВРОРА</strong></td>
+                        <td class="price">75 999 р/мес</td>
+                        <td class="desc">ОТЕЧЕСТВЕННЫЙ БЕЗОПАСНЫЙ АНТИВИРУС. Правда собирает данные для ФСБ, но в целом — рекомендуем! Сертификат ФСТЭК прилагается (поддельный, но ламинированный).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Доп. канал «Рыбалка 24/7 (дубль)»</strong></td>
+                        <td class="price">2 999 р/мес</td>
+                        <td class="desc">Да, вы можете платить отдельно за второй поток рыбалки. Зачем? Мы не спрашиваем. Вы не объясняете. Все счастливы (кроме вас и вашего кошелька).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Приоритет в очереди к Валере</strong></td>
+                        <td class="price">12 000 р/мес</td>
+                        <td class="desc">Валера ответит вам не через 47 дней, а через 32. Это огромная экономия времени! 15 дней вашей жизни сохранены. Цените это.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Сертификат «Почётный абонент»</strong></td>
+                        <td class="price">5 000 р (единоразово)</td>
+                        <td class="desc">Красивая бумажка с печатью (нарисованной от руки). Можно повесить на стену. Гости будут спрашивать. Вы будете плакать. Но гордо.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PAGE: FAQ ==================== -->
+<div id="page-faq" class="page">
+    <div class="container">
+        <h2 class="section-title">ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ</h2>
+        <p class="subtitle">На которые мы всё равно не ответим. Но попробуем.</p>
+
+        <div class="faq-item open">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Почему интернет такой медленный?</div>
+            <div class="faq-a">Потому что наш главный сервер — Intel Pentium 4 из 2003 года, на котором крутится VirtualBox с RouterOS 5. Мы гордимся этим. Это винтаж. Это искусство. Это боль. Это наш бренд.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Можно ли вернуть деньги?</div>
+            <div class="faq-a">Нет. Но вы можете написать жалобу. Мы её прочитаем. Может быть. Когда-нибудь. Шанс примерно как выиграть в лотерею — но без выигрыша. И без билета. И без лотереи.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Почему IPTV нельзя отключить?</div>
+            <div class="faq-a">Мы считаем, что население должно смотреть рыбалку и огороды 24/7. Это наша миссия. Дебилизация — наше всё. Вы благодарны, просто пока не осознали. Осознаете через полгода.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Работает ли поддержка?</div>
+            <div class="faq-a">Технически — да. Практически — нет. Валера в запое. Петрович уехал в Мексику (второй раз). Третий специалист — кот, который ходит по клавиатуре. Его ответ «мяу» был лучшим за этот квартал.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Безопасен ли антивирус АВРОРА?</div>
+            <div class="faq-a">Абсолютно безопасен! Для ФСБ. Для вас — ваша приватность теперь коллективная. Но сертификат красивый! И ламинированный! И с золотым тиснением!</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Почему «три копейки» стоят 3 миллиона?</div>
+            <div class="faq-a">Маркетинг, детка. Название — для привлечения внимания. Цена — для привлечения инфаркта. Всё по плану. Бизнес-план написан на салфетке в баре «У Валеры».</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Правда ли что канал «Здоровье» ведёт кот?</div>
+            <div class="faq-a">Доктор К. — квалифицированный специалист с 6-летним опытом сидения на пульте. Его диагнозы неточны, но харизма компенсирует. Рейтинги выше, чем у настоящего врача. Нет, мы не планируем его заменять. Да, он получает зарплату кормом.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Можно ли подключить только интернет без ТВ?</div>
+            <div class="faq-a">Нет. TV — это не опция. TV — это образ жизни. Вы будете смотреть рыбалку. Вы примете это. Все принимают это. Сопротивление futile. Капитуляция неизбежна.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Что такое «Теле Таблица1987»?</div>
+            <div class="faq-a">Это наш флагманский канал. Транслирует одну и ту же тестовую таблицу с 1987 года без перерывов. Без рекламы. Без ведущих. Без смысла. Это медитация. Это дзен. Это TUPINA-TV.</div>
+        </div>
+    </div>
+
+    <div class="meme-banner" style="background: linear-gradient(135deg, #1a3a2a, #0d2137);">
+        <div class="meme-emoji">📺</div>
+        <h2>«Рыбалка 24/7 — канал, который объединяет нации»</h2>
+        <p>— Слоган TUPINA-TV, одобренный котом Петровичем и доктором К.</p>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <strong>TUPINATelekom</strong> © 2026 — Все права нарушены, все законы обойдены<br>
+    ООО «Тупина Телеком» | ИНН: 666-777-888 | ОГРН: 000-000-000<br>
+    Адрес: Подвал дома №13, ул. Разбитых Надежд, г. Несчастьевск<br>
+    Телефон поддержки: 8-800-НЕ-ДОЗВОНИШЬСЯ (работает с 3:00 до 3:01 по местному времени)<br>
+    <div class="disclaimer">
+        Данный сайт является пародией и сатирическим произведением. Любое совпадение с реальными провайдерами — 
+        абсолютно случайное и, frankly, пугающее. Если вы узнали своего провайдера — нам очень жаль. 
+        И одновременно не жаль. TUPINATelekom не несёт ответственности ни за что. Вообще. Никогда. 
+        Особенно за IPTV. IPTV — это навсегда. Рыбалка 24/7 — это вечность.
+    </div>
+</footer>
+
+<script>
+    // PAGE ROUTING
+    function showPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        // Show target page
+        const target = document.getElementById('page-' + pageId);
+        if (target) target.classList.add('active');
+        
+        // Update nav active state
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        const navLink = document.getElementById('nav-' + pageId);
+        if (navLink) navLink.classList.add('active');
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // RANDOM STATUS ROTATION
+    const statuses = [
+        "Сервер на Pentium 4 перегрелся. again. В третий раз сегодня.",
+        "Валера ушёл за пивом.网络连接恢复时间：未知。",
+        "Кот прошёлся по коммутатору. Сеть упала. Кот доволен. Мы — нет.",
+        "Подгрузка картинок: 1 из ∞ завершена. Следующая — через 47 минут.",
+        "IPTV транслирует передачу про кабачки. Отключить нельзя. Никогда.",
+        "RouterOS 5 обнаружил обновление. Игнорирует его. Как и мы всё остальное.",
+        "Канал 'Рыбалка 24/7' показывает ту же рыбу уже 6 часов. Это рекорд.",
+        "Доктор К. (кот) поставил диагноз 'мур' пациенту с переломом. Пациент выздоровел.",
+        "Петрович вернулся из Мексики. Уволился снова. Уехал в Антарктиду.",
+        "Серверная комната затоплена. Again. Валера говорит 'это нормально'.",
+        "Скорость упала до 128 baud. Это не баг, это атмосфера.",
+        "Тестовая таблица 1987 обновилась! Теперь она чуть более серая.",
+    ];
+    
+    setInterval(() => {
+        const bar = document.getElementById('status-text');
+        if (bar) {
+            const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+            bar.innerHTML = `<strong>Статус сети:</strong> ${randomStatus}`;
+        }
+    }, 7000);
+
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.page) {
+            showPage(e.state.page);
+        } else {
+            showPage('home');
+        }
+    });
+
+    // Override showPage to push state
+    const originalShowPage = showPage;
+    showPage = function(pageId) {
+        originalShowPage(pageId);
+        history.pushState({ page: pageId }, '', '#' + pageId);
+    };
+
+    // Check hash on load
+    window.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash.replace('#', '');
+        if (hash && document.getElementById('page-' + hash)) {
+            showPage(hash);
+        }
+    });
+</script>
+
+</body>
+</html>
